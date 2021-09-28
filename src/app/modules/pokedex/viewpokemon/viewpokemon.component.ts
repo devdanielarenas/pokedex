@@ -61,7 +61,6 @@ export class ViewpokemonComponent implements OnInit {
   }
 
   loadPokemons(url): void {
-    
     if (url == 'start') {
       url = 'https://pokeapi.co/api/v2/pokemon/?limit=5';
       this.actualId = 0;
@@ -71,10 +70,10 @@ export class ViewpokemonComponent implements OnInit {
     } else if (url == 'previous') {
         if (this.previousPage != null) {
           url = this.previousPage;
-          this.actualId -= this.numberItems;  
+          this.actualId -= this.numberItems;
         } else {
           url = 'https://pokeapi.co/api/v2/pokemon/?limit=5';
-          this.actualId = 0;    
+          this.actualId = 0;
         }
     } else if (url == 'last') {
       url = 'https://pokeapi.co/api/v2/pokemon/?offset=145&limit=5';
@@ -82,7 +81,6 @@ export class ViewpokemonComponent implements OnInit {
     } else {
       this.actualId = 0;
     }
-    
     this.spinnerService.show();
     this.pokedexService.listPagination(url).subscribe(data => {
       this.loadList = true;
@@ -118,7 +116,7 @@ export class ViewpokemonComponent implements OnInit {
   pokemonExist(id): boolean {
     return this.myPokemons.some(function(el) {
       return el.id === id;
-    }); 
+    });
   }
 
   addPokemon(): void {
