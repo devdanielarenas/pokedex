@@ -15,7 +15,7 @@ import { environment as env } from 'src/environments/environment';
  */
 export abstract class API<T> {
 
-  protected URL_API: string = env.API + '/api/';
+  protected URL_API: string = env.API + '/v2/';
   protected abstract URL: string;
 
   constructor(protected http: HttpClient) {
@@ -44,8 +44,8 @@ export abstract class API<T> {
    * of object
    * @param params parameters for the query params
    */
-  listPagination(params?: {}): Observable<T[]> {
-    return this.http.get<T[]>(this.URL, { params });
+  listPagination(url, params?: {}): Observable<T[]> {
+    return this.http.get<T[]>(url, { params });
   }
 
   /**

@@ -11,6 +11,6 @@ export class PokedexService extends API<any> {
     super(http);
   }
 
-  protected URL = `${this.URL_API}`;
+  protected URL = `${this.URL_API}pokemon/`;
 
 }
