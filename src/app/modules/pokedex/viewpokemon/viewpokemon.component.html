@@ -1,1 +1,245 @@
-<p>viewpokemon works!</p>
+  <div id="mainPokedex">
+    <div class="container">
+      <div class="row">
+        <div class="col-md">
+          <!-- Left Panel -->
+          <div id="left-panel">
+            <!-- Top lights -->
+            <div class="left-top-container">
+              <svg class="left-svg">
+                <polyline
+                  points="0,75 70,75 90,38 824,38"
+                  style="fill: none; stroke: black; stroke-width: 3"
+                />
+              </svg>
+              <div class="lights-container">
+                <div class="big-light-boarder">
+                  <div class="big-light blue">
+                    <div class="big-dot light-blue"></div>
+                  </div>
+                </div>
+                <div class="small-lights-container">
+                  <div class="small-light red">
+                    <div class="dot light-red"></div>
+                  </div>
+                  <div class="small-light yellow">
+                    <div class="dot light-yellow"></div>
+                  </div>
+                  <div class="small-light green">
+                    <div class="dot light-green"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="upper-buttons-container">
+                <button class="white-square" (click)="loadPokemons('start')">S</button>
+                <button class="white-square" (click)="loadPokemons('previous')"><</button>
+                <button class="white-square" (click)="loadPokemons('next')">></button>
+                <button class="white-square" (click)="loadPokemons('last')">E</button>
+              </div>
+            </div>
+            <!-- Center Screen -->
+            <div class="container">
+              <div class="row align-items-center text-center">
+                <div class="col">
+                  <div class="screen-container-list">
+                    <div class="screen-list">
+                      <div class="top-screen-lights">
+                        <div class="mini-light red"></div>
+                        <div class="mini-light red"></div>
+                      </div>
+                      <div id="main-screen">
+                        <div class="card p-0">
+                          <div class="row">
+                              <div class="col-12">
+                                  <div *ngIf="loadList" class="table-responsive">
+                                      <table id="name-screen" class="table table-sm table-striped">
+                                          <thead>
+                                              <tr>
+                                                  <th>N°</th>
+                                                  <th>Name</th>
+                                                  <th>Action</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr *ngFor="let pokemon of pokemons; let i = index">
+                                                  <td>{{ i + 1 + actualId}}</td>
+                                                  <td>{{ pokemon.name }}</td>
+                                                  <td><button type="button" class="btn-sm" (click)="showPokemon(pokemon.name)">Show</button></td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                                  <div *ngIf="!loadList" class="col-sm-8">
+                                    <div class="pokemon-name">
+                                      Loading...
+                                      <div id='loader'></div>
+                                    </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                      <div class="bottom-screen-lights">
+                        <div class="small-light red">
+                          <div class="dot light-red"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row align-items-center text-center">
+                <div class="col">
+                  <div class="upper-buttons-container">
+                    <div class="long-buttons-container">
+                      <div class="long-button red"></div>
+                      <div class="long-button light-blue"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="green-screen">
+                    <span id="name-screen">{{ pokeDetail ? pokeDetail.name: '' }}</span>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="nav-button">
+                    <div class="nav-center-circle"></div>
+                    <div class="nav-button-vertical"></div>
+                    <div class="nav-button-horizontal">
+                      <div class="border-top"></div>
+                      <div class="border-bottom"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md">
+          <div id="right-panel">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <div class="empty-container">
+                    <svg height="100px" width="100%">
+                      <polyline
+                        points="0,0 0,40 138,40 158,75 850,75 850,0 0,0"
+                        style="fill: #f2f2f2; stroke: none; stroke-width: 3"
+                      />
+                      <polyline
+                        points="0,40 138,40 158,75 850,75"
+                        style="fill: none; stroke: black; stroke-width: 3"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="row align-items-center text-center">
+                    <div class="col">
+                        <input #namePokemon id="name-screen" type="text" placeholder="Name / id" (keyup.enter)="findPokemon(namePokemon.value)"/>
+                        <button class="white-square" (click)="findPokemon(namePokemon.value)">F</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm">
+                  <!-- Center Screen -->
+                  <div class="screen-container">
+                    <div class="screen">
+                      <div class="top-screen-lights">
+                        <div class="mini-light red"></div>
+                        <div class="mini-light red"></div>
+                      </div>
+                      <div class="row main-screen text-center">
+                        <div class="col-12">
+                          <div class="row">
+                            <div class="col pokemon-info ml-2">
+                              Pokemons: {{myPokemons.length}}
+                            </div>
+                          </div>
+                          <div *ngIf="!showMyPokemons && !message" class="row align-items-center text-center h-75 mt-2">
+                            <div class="col-4">
+                              <img class="poke-image" *ngIf="pokeDetail" src='{{pokeDetail.sprites.front_default}}'>
+                              <img class="poke-image" *ngIf="!pokeDetail" src='assets/images/pokeball.svg'>
+                            </div>
+                            <div *ngIf="loadDetail" class="col-8">
+                              <div class="pokemon-name">
+                                Name: {{ pokeDetail ? pokeDetail.name : '' }}<br>
+                              </div>
+                              <div class="pokemon-info">
+                                Height: {{ pokeDetail ? pokeDetail.height : 0 }}<br>
+                                Weight: {{ pokeDetail ? pokeDetail.weight : 0 }}<br>
+                                Type:{{ pokeDetail ? pokeTypes : '' }}<br>
+                                Base exp.: {{ pokeDetail ? pokeDetail.base_experience : 0 }}
+                              </div>
+                            </div>
+                            <div *ngIf="!loadDetail" class="col-8">
+                              <div *ngIf="!pokeDetail" class="pokemon-name">
+                                Select one...
+                              </div>
+                              <div *ngIf="pokeDetail" class="pokemon-name">
+                                <div id='loader'></div>
+                                Loading...
+                              </div>
+                            </div>
+                          </div>
+                          <div *ngIf="showMyPokemons && !message" class="row">
+                            <div class="col">
+                              <div class="table-responsive my-poke-list">
+                                <table id="name-screen" class="table table-sm table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Exp.</th>
+                                            <th>Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let myPokemon of myPokemons; let i = index">
+                                            <td>{{ myPokemon.base_experience}}</td>
+                                            <td>{{ myPokemon.name }}</td>
+                                            <td><button type="button" class="btn-sm" (click)="removePokemon(myPokemon.id)">X</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                          <div *ngIf="message" class="row">
+                            <div class="col-12 pokemon-info text-center">
+                              {{message}}
+                            </div>
+                          </div>
+                          <div *ngIf="!showMyPokemons && !message" class="row">
+                            <div class="col-12 pokemon-info text-center">
+                              Total exp: {{ totalExp }} Catch em!
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="bottom-screen-lights">
+                        <div class="small-light red">
+                          <div class="dot light-red"></div>
+                        </div>
+                        <div class="yellow-button" [ngClass]="(pokeDetail != [] && loadDetail == true) ? 'yellow' : 'blue'">
+                          <div class="big-dot light-yellow"></div>
+                        </div>
+                        <button *ngIf="!showMyPokemons && pokeDetail" class="white-square" (click)="addPokemon()">Yes</button>
+                        <button *ngIf="showMyPokemons" class="white-square" (click)="backToDetails()"><-</button>
+                        <button *ngIf="myPokemons.length > 0 && pokeDetail && !showMyPokemons" class="white-square" (click)="showMyPokemons=true">List</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

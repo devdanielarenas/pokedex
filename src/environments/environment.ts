@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  API: 'https://localhost:3000'
+  //API: 'https://localhost:3000',
+  API: 'https://pokeapi.co/api'
 };
 
 /*
